@@ -71,7 +71,7 @@ $('form#login').on('submit', function(e) {
 		localStorage.setItem("groep", groep);
 		success: function(response){
 			window.location.href = "/dashboard.html";
-		}
+		},
 		error: function(response){
 			alert("Controleer uw gebruikersnaam/wachtwoord/groepsnaam");
 		}
