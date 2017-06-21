@@ -17,12 +17,13 @@ public class BaseDAO {
 				URI dbUri = new URI(DATABASE_URL_PROP);
 				String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + dbUri.getPath();
 				BasicDataSource pool = new BasicDataSource();
-				pool.setMaxConnLifetimeMillis(60000);
 
 				if (dbUri.getUserInfo() != null) {
 					pool.setUsername(dbUri.getUserInfo().split(":")[0]);
 					pool.setPassword(dbUri.getUserInfo().split(":")[1]);
 				}
+				pool.setMaxConnLifetimeMillis(60000);
+				pool.setMaxTotal(10);
 				pool.setDriverClassName("org.postgresql.Driver");
 				pool.setUrl(dbUrl);
 				pool.setInitialSize(1);
