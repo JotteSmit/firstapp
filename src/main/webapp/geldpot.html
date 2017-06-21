@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Geldpot</title>
+<link href="/firstapp/css/bootstrap.min.css" rel="stylesheet">
+<link href="/firstapp/css/geldpot.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Roboto+Slab|Source+Sans+Pro" rel="stylesheet">
+<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<body onload="laadWeekbedrag()">
+<nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="http://localhost:8083/firstapp/geldpot.html">Geldpot</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+			<li><a href="http://localhost:8083/firstapp/dashboard.html" class="button">Dashboard</a></li>
+			<li><a href="http://localhost:8083/firstapp/boodschappenlijst.html" class="button">Boodschappenlijst</a></li>
+			<li><a href="http://localhost:8083/firstapp/favorietenlijst.html" class="button">Favorietenlijst</a></li>
+			<li><a href="http://localhost:8083/firstapp/useraanmaken.html" class="button">Gebruiker aanmaken</a></li>
+			<li><a href="http://localhost:8083/firstapp/login.html" class="button">Uitloggen</a></li>
+          </ul>
+        </div>
+     </div>
+</nav>
+<div class="container main-margin-container">
+<h1>Geldpot</h1>
+<p>Op deze pagina kan de admin een geldpot toevoegen.<br>
+Zorg dat u niet vergeet de geldpot aan te passen nadat u een boodschap heeft afgestreept!</p>
+<form id="newWeekbedrag">
+	<div class="form-group">
+    	<label for="weekbedrag">Voer een geldpot in</label>
+   		<input type="number" step="0.01" placeholder="Voer een bedrag in van maximaal €99.99" id="weekbedrag" name="weekbedrag" class="form-control">
+  	</div>
+		<input type="submit" id="post" value="Weekbedrag toevoegen" class="btn btn-primary">
+
+</form>
+<form id="updateWeekbedrag">
+	<div class="form-group">
+		<label for="weekbedrag2">Update de geldpot</label>
+		<input type="number" step="0.01" placeholder="Voer een bedrag in van maximaal €99.99" id="weekbedrag2"  name="weekbedrag2" class="form-control">
+	</div>
+		<input type="submit" id="put" value="Geldpot updaten" class="btn btn-primary">
+</form>
+<div id="response"></div>
+<div id="tablecontainer" class="table table-striped"></div>
+ 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://localhost:8083/firstapp/js/bootstrap.min.js"></script>
+</div>
+</body>
+
+<script>
+function laadWeekbedrag(groep){
+	var groep = localStorage.getItem("groep", groep);
+	$.getJSON("http://localhost:8083/firstapp/restservices/geldpot/" + groep, function(geldpotData){
+		
+		var table = '<table class="table table-striped"><tr> <th>Geldpot</th> </tr>';
+		
+		$.each(geldpotData, function (key, value) {
+			var geldpot_id = value.geldpot_id;
+			var weekbedrag = value.weekbedrag;
+			var groepsnaam = value.groepsnaam;
+			table += '<tr>';
+			table += '<td>' + '€' + weekbedrag + '</td>';
+			table += '</tr>';
+		});
+		table += '</table>';
+		document.getElementById("tablecontainer").innerHTML = table;
+	});
+}
+
+$('form#newWeekbedrag').on('submit', function(e) {
+	e.preventDefault();
+	
+	var groep = localStorage.getItem("groep", groep);
+	var data = { "weekbedrag": $("#weekbedrag").val(), "groepsnaam" : groep }	
+	var JSONdata = JSON.stringify(data);
+	
+	$.ajax({
+		url: "http://localhost:8083/firstapp/restservices/geldpot/",
+		method: "post",
+		data: JSONdata,
+		dataType: "text",
+		dataContext: "application/json",
+		beforeSend: function(xhr) {
+			var token = window.sessionStorage.getItem("sessionToken");
+			xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+		},
+		success: function(response){
+			laadWeekbedrag();
+			alert("Geldpot toegevoegd!");
+		},
+		error: function(response){
+			alert("U heeft al een geldpot!")
+		}
+	});
+});
+
+$('form#updateWeekbedrag').on('submit', function(e) {
+	e.preventDefault();
+	
+	var groep = localStorage.getItem("groep", groep);
+	var data = { "weekbedrag": $("#weekbedrag2").val(), "groepsnaam" : groep }	
+	var JSONdata = JSON.stringify(data);
+	console.log(JSONdata);
+	
+	$.ajax({
+		url: "/firstapp/restservices/geldpot/update/" + groep,
+		method: "put",
+		data: JSONdata,
+		dataType: "text",
+		dataContext: "application/json",
+		beforeSend: function(xhr) {
+			var token = sessionStorage.getItem("sessionToken");
+			xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+		},
+		success: function(response){
+			laadWeekbedrag();
+		}	
+	});
+	alert("Weekbedrag geupdate!");
+	laadWeekbedrag();
+});
+</script>
+</html>

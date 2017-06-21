@@ -1,0 +1,39 @@
+.maintable {
+	max-width:50%
+	margin:0 auto;
+}
+
+.main-margin-container {
+	padding-top:51px;
+}
+
+div {
+	font-family: 'Source Sans Pro', sans-serif;
+}
+
+p {
+	font-family: 'Source Sans Pro', sans-serif;
+}
+
+h1 {
+	font-family: 'Roboto Slab', serif;
+}
+
+body {
+	background-color:#eee;
+}
+
+.main-margin-container {
+	background-color:#fff;
+	padding:51px 30px 30px;
+	max-width:960px;
+}
+
+@media screen and (min-width: 480px) {
+    form {
+        max-width: 50%
+    }
+}
+form {
+	margin-bottom: 30px;
+}

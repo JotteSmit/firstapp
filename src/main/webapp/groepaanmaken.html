@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Groep aanmaken</title>
+<link href="/firstapp/css/bootstrap.min.css" rel="stylesheet">
+<link href="/firstapp/css/geldpot.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Roboto+Slab|Source+Sans+Pro" rel="stylesheet">
+<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="http://localhost:8083/firstapp/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="http://localhost:8083/firstapp/groepaanmaken.html">Groep aanmaken</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+			<li><a href="http://localhost:8083/firstapp/login.html" class="button">Terug naar inloggen</a></li>
+          </ul>
+        </div>
+     </div>
+</nav>
+
+<div class="container main-margin-container">
+<h1>Nieuwe groep aanmaken</h1>
+<form id=newGroep>
+	<div class="form-group">
+		<label for="groepsnaam">Groepsnaam</label>
+		<input type="text" placeholder="Gebruik alleen letters, cijfers en spaties" id="groepsnaam" name="groepsnaam" required="required" class="form-control">
+	</div>
+	<div class="form-group">
+		<label for="voornaam">Voornaam</label>
+		<input type="text" placeholder="Voornaam" id="voornaam" name="voornaam" required="required" class="form-control">
+	</div>
+	<div class="form-group">
+		<label for="achternaam">Achternaam</label>
+		<input type="text" placeholder="Achternaam" id="achternaam" name="achternaam" required="required" class="form-control">
+	</div>
+	<div class="form-group">
+		<label for="email">Email adress</label>
+		<input type="email" placeholder="Email" id="email" name="email" required="required" class="form-control">
+	</div>
+	<div class="form-group">
+		<label for="wachtwoord">Wachtwoord</label>
+		<input type="password" placeholder="Wachtwoord" id="wachtwoord" name="wachtwoord" required="required" class="form-control">
+	</div>
+		<input type="submit" id="post" value="Groep en admin aanmaken (2x klikken)" required="required" class="btn btn-primary">
+</form>
+<div id="response"></div>
+</div>
+</body>
+
+<script>
+$('form#newGroep').on('submit', function(e) {
+ e.preventDefault();
+	
+	var data = { "voornaam": $("#voornaam").val(), 
+			"achternaam": $("#achternaam").val(), 
+			"email": $("#email").val(), 
+			"wachtwoord": $("#wachtwoord").val(),
+			'rol': 'admin', 
+			"groepsnaam": $("#groepsnaam").val() }
+	var data2 = { "groepsnaam": $("#groepsnaam").val() }
+	
+	var JSONdata = JSON.stringify(data);
+	var JSONdata2 = JSON.stringify(data2);
+	
+	$.ajax({
+		url: "http://localhost:8083/firstapp/restservices/groepsnaam",
+		method: "post",
+		data: JSONdata2,
+		dataType: "text",
+		dataContext: "application/json",
+		success: function(response){
+		}
+	});	 
+	
+	$.ajax({
+		url: "http://localhost:8083/firstapp/restservices/studenten/new",
+		method: "post",
+		data: JSONdata,
+		dataType: "text",
+		dataContext: "application/json",
+		success: function(response){
+			window.location.href= "http://localhost:8083/firstapp/login.html";
+			alert("Groep en admin zijn aangemaakt!");
+		}
+	});
+
+});
+</script>
+</html>
