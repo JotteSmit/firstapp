@@ -66,10 +66,10 @@ $('form#login').on('submit', function(e) {
 	var data = $("#login").serialize();
 	
 	$.post("/restservices/authentication", data, function(response) {
-		window.sessionStorage.setItem("sessionToken", response);
-		var groep = $("#groep").val();
-		localStorage.setItem("groep", groep);
 		success: function(response){
+			window.sessionStorage.setItem("sessionToken", response);
+			var groep = $("#groep").val();
+			localStorage.setItem("groep", groep);
 			window.location.href = "/dashboard.html";
 		},
 		error: function(response){
