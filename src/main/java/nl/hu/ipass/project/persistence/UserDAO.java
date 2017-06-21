@@ -18,6 +18,9 @@ public class UserDAO extends BaseDAO {
 
 			if (rs.next())
 				rol = rs.getString("rol");
+			rs.close();
+			pstmt.close();
+			con.close();
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 		}

@@ -11,8 +11,8 @@ public class GroepsnaamDAO extends BaseDAO {
 		
 		stmt.setString(1, gn.getGroepsnaam());		
 		stmt.executeUpdate();
+		stmt.close();
 		con.close();
 		return gn;
-	}
-	
+	}	
 }

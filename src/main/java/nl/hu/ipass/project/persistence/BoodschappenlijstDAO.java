@@ -17,6 +17,7 @@ public class BoodschappenlijstDAO extends BaseDAO {
 		stmt.setString(4, bl.getGroepsnaam());
 		
 		stmt.executeUpdate();
+		stmt.close();
 		con.close();
 		return bl;		
 	}
@@ -39,6 +40,7 @@ public class BoodschappenlijstDAO extends BaseDAO {
 			boodschappenLijst.add(bl);
 		}
 		rs.close();
+		stmt.close();
 		con.close();
 		return boodschappenLijst;
 	}
@@ -61,6 +63,7 @@ public class BoodschappenlijstDAO extends BaseDAO {
 			boodschappenLijst.add(bl);
 		}
 		rs.close();
+		stmt.close();
 		con.close();
 		return boodschappenLijst;
 	}
@@ -70,6 +73,7 @@ public class BoodschappenlijstDAO extends BaseDAO {
 		PreparedStatement stmt = con.prepareStatement("DELETE FROM boodschappenlijst WHERE boodschappenlijst_id = ?");
 		stmt.setInt(1, bl.getBoodschappenlijst_id());
 		boolean result = stmt.execute();
+		stmt.close();
 		con.close();
 		return result;
 	}

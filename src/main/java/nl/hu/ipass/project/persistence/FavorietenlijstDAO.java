@@ -16,6 +16,7 @@ public class FavorietenlijstDAO extends BaseDAO {
 		stmt.setString(3, fl.getGroepsnaam());
 		
 		stmt.executeUpdate();
+		stmt.close();
 		con.close();
 		return fl;
 	}
@@ -37,6 +38,7 @@ public class FavorietenlijstDAO extends BaseDAO {
 			favorietenLijst.add(fl);
 		}
 		rs.close();
+		stmt.close();
 		con.close();
 		return favorietenLijst;
 	}
@@ -58,6 +60,7 @@ public class FavorietenlijstDAO extends BaseDAO {
 			favorietenLijst.add(fl);
 		}
 		rs.close();
+		stmt.close();
 		con.close();
 		return favorietenLijst;
 	}
@@ -67,6 +70,7 @@ public class FavorietenlijstDAO extends BaseDAO {
 		PreparedStatement stmt = con.prepareStatement("DELETE FROM favorietenlijst WHERE favorietenlijst_id = ?");
 		stmt.setInt(1, fl.getFavorietenlijst_id());		
 		boolean result = stmt.execute();
+		stmt.close();
 		con.close();
 		return result;
 	}

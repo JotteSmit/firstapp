@@ -19,6 +19,7 @@ public class StudentDAO extends BaseDAO {
 		stmt.setString(6, st.getGroepsnaam());
 		
 		stmt.executeUpdate();
+		stmt.close();
 		con.close();
 		return st;
 	}
@@ -43,6 +44,7 @@ public class StudentDAO extends BaseDAO {
 			studentenLijst.add(stu);
 		}
 		rs.close();
+		stmt.close();
 		con.close();
 		return studentenLijst;
 	}

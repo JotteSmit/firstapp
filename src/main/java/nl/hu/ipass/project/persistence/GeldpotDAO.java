@@ -15,6 +15,7 @@ public class GeldpotDAO extends BaseDAO {
 		stmt.setString(2, gp.getGroepsnaam());
 		
 		stmt.executeUpdate();
+		stmt.close();
 		con.close();
 		return gp;
 	}
@@ -35,6 +36,7 @@ public class GeldpotDAO extends BaseDAO {
 			geldPot.add(gp);
 		}
 		rs.close();
+		stmt.close();
 		con.close();
 		return geldPot;
 	}
@@ -55,6 +57,7 @@ public class GeldpotDAO extends BaseDAO {
 			geldPot.add(gp);
 		}
 		rs.close();
+		stmt.close();
 		con.close();
 		return geldPot;
 	}
@@ -68,8 +71,8 @@ public class GeldpotDAO extends BaseDAO {
 		stmt.setDouble(1, gp.getWeekbedrag());
 		stmt.setString(2, gp.getGroepsnaam());
 		stmt.executeQuery();
+		stmt.close();
 		con.close();
-		System.out.print(gp);
 		return gp;
 	}
 	
@@ -84,8 +87,8 @@ public class GeldpotDAO extends BaseDAO {
 			geldpotLijst.add(gp);
 		}
 		rs.close();
+		stmt.close();
 		con.close();
-		System.out.print(geldpotLijst);
 		return geldpotLijst.get(0);		
 	}
 }
