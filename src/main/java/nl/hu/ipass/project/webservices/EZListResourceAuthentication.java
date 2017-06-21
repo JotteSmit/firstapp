@@ -21,11 +21,11 @@ public class EZListResourceAuthentication {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response authenticateUser( 
 			@FormParam("email") String email, 
-			@FormParam("wachtwoord") String wachtwoord) {
+			@FormParam("wachtwoord") String wachtwoord, @FormParam("groep") String groepsnaam) {
 		try {  
 			//Authenticate the user against the database 
 			UserDAO dao = new UserDAO(); 
-			String rol = dao.findRoleForUsernameAndPassword(email, wachtwoord);
+			String rol = dao.findRoleForUsernameAndPassword(email, wachtwoord, groepsnaam);
 			
 			if (rol == null) { throw new IllegalArgumentException("No user found!"); } 
 				
