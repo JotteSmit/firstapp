@@ -69,7 +69,7 @@ $('form#login').on('submit', function(e) {
 		window.sessionStorage.setItem("sessionToken", response);
 		var groep = $("#groep").val();
 		localStorage.setItem("groep", groep);
-		window.location.href = "/index.html";
+		window.location.href = "/dashboard.html";
 	});
 });
 
