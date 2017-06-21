@@ -70,11 +70,11 @@ $('form#login').on('submit', function(e) {
 		var groep = $("#groep").val();
 		localStorage.setItem("groep", groep);
 		window.location.href = "/dashboard.html";
-	});
+	},
 	
-	error: function(response){
+	error: function(){
 		alert("Controleer uw email/wachtwoord/gebruikersnaam");
-	}
+	});
 });
 
 
