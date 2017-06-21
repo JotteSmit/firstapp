@@ -17,6 +17,7 @@ public class BaseDAO {
 				URI dbUri = new URI(DATABASE_URL_PROP);
 				String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + dbUri.getPath();
 				BasicDataSource pool = new BasicDataSource();
+				pool.setMaxTotal(10);
 
 				if (dbUri.getUserInfo() != null) {
 					pool.setUsername(dbUri.getUserInfo().split(":")[0]);
