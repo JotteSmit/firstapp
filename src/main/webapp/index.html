@@ -12,7 +12,7 @@
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="http://localhost:8083/firstapp/js/bootstrap.min.js"></script>
+<script src="/firstapp/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -25,11 +25,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="http://localhost:8083/firstapp/login.html">Inloggen</a>
+          <a class="navbar-brand" href="/firstapp/login.html">Inloggen</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-			<li><a href="http://localhost:8083/firstapp/groepaanmaken.html" class="button">Nieuwe groep aanmaken</a></li>
+			<li><a href="/firstapp/groepaanmaken.html" class="button">Nieuwe groep aanmaken</a></li>
           </ul>
         </div>
      </div>
@@ -65,11 +65,11 @@ $('form#login').on('submit', function(e) {
 	e.preventDefault();
 	var data = $("#login").serialize();
 	
-	$.post("http://localhost:8083/firstapp/restservices/authentication", data, function(response) {
+	$.post("/firstapp/restservices/authentication", data, function(response) {
 		window.sessionStorage.setItem("sessionToken", response);
 		var groep = $("#groep").val();
 		localStorage.setItem("groep", groep);
-		window.location.href = "http://localhost:8083/firstapp/dashboard.html";
+		window.location.href = "/firstapp/dashboard.html";
 	});
 });
 
